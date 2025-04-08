@@ -18,7 +18,7 @@ export default async function DashboardPage() {
 
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-
+import Link from "next/link";
 export default async function DashboardPage() {
   const { userId } = await auth();
   if (!userId) {
@@ -50,7 +50,14 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-blue-100 p-4 rounded-lg shadow-md">
             <h2 className="text-lg font-semibold text-blue-800">Stat 1</h2>
-            <p className="text-blue-700">Value 1</p>
+            <p className="text-blue-700">
+                {/* Book a Ride Button */}
+        <Link href="/book-ride">
+          <button className="mt-4 px-6 py-3 bg-green-500 hover:bg-green-600 transition rounded-xl text-white font-semibold text-lg shadow-md">
+            🧭 Book a Ride
+          </button>
+        </Link>
+            </p>
           </div>
           <div className="bg-green-100 p-4 rounded-lg shadow-md">
             <h2 className="text-lg font-semibold text-green-800">Stat 2</h2>
