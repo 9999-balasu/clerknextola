@@ -66,6 +66,10 @@ export default function BookRidePage() {
 import Script from 'next/script';
 import { useState } from 'react';
 
+
+let amount = 0;
+
+
 export default function BookRidePage() {
   const [pickup, setPickup] = useState('');
   const [drop, setDrop] = useState('');
@@ -79,7 +83,24 @@ export default function BookRidePage() {
     }
 
     setLoading(true);
-    const res = await fetch('/api/razorpay', { method: 'POST' });
+   // const res = await fetch('/api/razorpay', { method: 'POST' });
+   
+   if (vehicle === 'Bike') amount = 20000;
+   else if (vehicle === 'Auto') amount = 30000;
+   else if (vehicle === 'Mini') amount = 50000;
+   else if (vehicle === 'SUV') amount = 80000;
+
+   const res = await fetch('/api/razorpay', {
+    method: 'POST',
+    
+    body: JSON.stringify({ amount }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  
+
+
     const order = await res.json();
 
     const options: RazorpayOptions = {
@@ -175,4 +196,8 @@ type RazorpayOptions = {
     color: string;
   };
 };
+
+
+
+
 
