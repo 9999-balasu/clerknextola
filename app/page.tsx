@@ -88,7 +88,7 @@ export default function Home() {
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser, SignedIn, SignedOut, UserButton, SignInButton } from '@clerk/nextjs';
-
+import Link from 'next/link';
 export default function Home() {
   const router = useRouter();
   const { isSignedIn } = useUser();
@@ -102,6 +102,8 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white flex flex-col items-center justify-center px-6 py-10">
       <div className="max-w-3xl text-center space-y-6">
+
+     
         <h1 className="text-5xl md:text-7xl font-bold text-green-400 drop-shadow-lg">
           YokRide
         </h1>
@@ -143,6 +145,11 @@ export default function Home() {
             <p className="mt-2 text-lg text-white">Starts at {price}</p>
           </div>
         ))}
+
+
+
+
+
       </div>
     </div>
   );
