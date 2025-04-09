@@ -206,6 +206,7 @@ type RazorpayOptions = {
 
 import Script from 'next/script';
 import { useState } from 'react';
+import RideCompanion from '@/components/RideCompanion';
 
 export default function BookRidePage() {
   const [pickup, setPickup] = useState('');
@@ -265,6 +266,52 @@ export default function BookRidePage() {
     setLoading(false);
   };
 
+
+  const handlePanicAlert = async () => {
+    if (!pickup || !drop || !vehicle) {
+      alert("Please book a ride first.");
+      return;
+    }
+  
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+  
+        alert(
+          `🚨 Emergency Alert Sent!\nLocation: (${latitude}, ${longitude})\nRide Info:\nPickup: ${pickup}\nDrop: ${drop}\nVehicle: ${vehicle}`
+        );
+  
+        console.log("Emergency alert sent to admin:", {
+          pickup,
+          drop,
+          vehicle,
+          latitude,
+          longitude,
+        });
+      }, () => {
+        alert("Unable to get your location.");
+      });
+    } else {
+      alert("Geolocation not supported by your browser.");
+    }
+
+
+
+  
+    
+  };
+  
+
+
+
+
+
+
+
+
+
+
   return (
     <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center px-4">
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
@@ -310,6 +357,20 @@ export default function BookRidePage() {
         >
           {loading ? 'Processing...' : 'Pay & Confirm Ride'}
         </button>
+
+
+        <button
+  onClick={handlePanicAlert}
+  className="w-full py-2 bg-red-600 hover:bg-red-700 transition rounded-xl font-semibold text-lg shadow mt-2"
+>
+  🚨 Panic Button
+</button>
+{pickup && drop && vehicle && (
+  <RideCompanion pickup={pickup} drop={drop} />
+)}
+
+
+
       </div>
     </div>
   );
