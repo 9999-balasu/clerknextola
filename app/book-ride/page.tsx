@@ -299,7 +299,20 @@ export default function BookRidePage() {
 
 
   
+  
+
     
+  };
+  
+  const suggestVehicle = () => {
+    if (pickup && drop) {
+      // This is just demo logic — ideally use map API to calculate distance
+      if (pickup.length < 5 && drop.length < 5) {
+        alert('We recommend a 🏍️ *Bike* for your short trip!');
+      } else if (pickup.length > 10 || drop.length > 10) {
+        alert('Looks like a longer ride — Try an 🚙 *SUV* for comfort!');
+      }
+    }
   };
   
 
@@ -333,6 +346,16 @@ export default function BookRidePage() {
           value={drop}
           onChange={(e) => setDrop(e.target.value)}
         />
+
+<button
+  onClick={suggestVehicle}
+  className="text-sm text-green-400 underline"
+>
+  🚀 Suggest Best Vehicle
+</button>
+
+
+
 
         <select
           className="w-full px-4 py-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
