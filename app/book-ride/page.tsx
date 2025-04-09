@@ -371,6 +371,28 @@ export default function BookRidePage() {
 
 
 
+<button
+  className="mt-2 px-4 py-1 bg-green-600 rounded-md hover:bg-green-700 text-white text-sm"
+  onClick={() => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'My YokRide',
+          text: 'I’m on a ride with YokRide. Track me here!',
+          url: window.location.href,
+        })
+        .then(() => console.log('Ride shared successfully'))
+        .catch((err) => console.error('Error sharing ride:', err));
+    } else {
+      alert('Sharing not supported on this device.');
+    }
+  }}
+>
+  Share Ride
+</button>
+
+
+
       </div>
     </div>
   );
