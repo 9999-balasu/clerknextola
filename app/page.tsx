@@ -89,6 +89,12 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser, SignedIn, SignedOut, UserButton, SignInButton } from '@clerk/nextjs';
 import Link from 'next/link';
+
+
+
+
+
+
 export default function Home() {
   const router = useRouter();
   const { isSignedIn } = useUser();
