@@ -405,7 +405,26 @@ export default async function Dashboard() {
                 >
                   🚕 Book Again
                 </Link>
+
+
+
+                <Link
+  href={`/track/${ride._id.toString()}`}
+  className="text-green-600 text-sm underline mt-1 inline-block"
+>
+  📍 Track Ride
+</Link>
+
+
+
               </div>
+
+
+
+
+
+
+
             ))}
           </div>
         </div>

@@ -1,3 +1,5 @@
+
+
 {
   "compilerOptions": {
     "target": "ES2017",
@@ -18,10 +20,14 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".",  // Base URL for resolution
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@/components/*": ["components/*"]  // Adjusted the path to point directly to components folder
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
+
+
