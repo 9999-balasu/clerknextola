@@ -127,7 +127,7 @@ export default async function DashboardPage() {
 
 
 
-import clientPromise from '@/lib/mongodb';
+/*import clientPromise from '@/lib/mongodb';
 import { ObjectId } from 'mongodb';
 import Link from 'next/link';
 
@@ -141,7 +141,44 @@ interface Ride {
   createdAt: Date;
 }
 
-export default async function Dashboard() {
+
+
+type Props = {
+  searchParams: { page?: string };
+};
+
+
+export default async function Dashboard({ searchParams }: Props) {
+
+
+
+
+  const page = parseInt(searchParams.page || '1');
+  const limit = 5;
+  const skip = (page - 1) * limit;
+
+  const client = await clientPromise;
+  const db = client.db('yokrid');
+
+  const totalRides = await db.collection<Ride>('rides').countDocuments();
+  const rides = await db
+    .collection<Ride>('rides')
+    .find()
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit)
+    .toArray();
+
+  const totalPages = Math.ceil(totalRides / limit);
+
+
+
+
+
+
+
+
+
   const client = await clientPromise;
   const db = client.db('yokrid');
   const rides = await db.collection<Ride>('rides').find().sort({ createdAt: -1 }).toArray();
@@ -149,8 +186,8 @@ export default async function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 flex flex-col items-center justify-start p-6">
       <div className="bg-white rounded-3xl shadow-2xl p-10 max-w-5xl w-full text-center transform transition-all duration-500 hover:scale-[1.02]">
-        {/* Hero Section */}
-        <div className="flex justify-center mb-6">
+        {/* Hero Section */
+       /* <div className="flex justify-center mb-6">
           <svg
             className="w-20 h-20 text-blue-500"
             fill="currentColor"
@@ -168,15 +205,15 @@ export default async function Dashboard() {
           We're glad to have you back!
         </p>
 
-        {/* Book a Ride Button */}
-        <Link href="/book-ride">
+        {/* Book a Ride Button */
+       /* <Link href="/book-ride">
           <button className="mb-10 px-6 py-3 bg-green-500 hover:bg-green-600 transition rounded-xl text-white font-semibold text-lg shadow-md">
             🧭 Book a Ride
           </button>
         </Link>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 text-left">
+        {/* Stats Cards */
+       /* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 text-left">
           <div className="bg-blue-100 p-5 rounded-xl shadow-md">
             <h2 className="text-lg font-semibold text-blue-800 mb-1">Total Rides</h2>
             <p className="text-blue-700 text-2xl ">{rides.length}</p>
@@ -192,6 +229,158 @@ export default async function Dashboard() {
             </p>
           </div>
         </div>
+
+        {/* Ride Data List */
+      /*  <div className="text-left">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">🚖 Recent Rides</h2>
+
+          <a
+  href="/api/export-rides"
+  className="inline-block mb-4 text-green-600 underline text-sm"
+>
+  ⬇️ Export Ride History (CSV)
+</a>
+
+
+
+          <div className="grid gap-4">
+            {rides.map((ride) => (
+              <div
+                key={ride._id.toString()}
+                className="border rounded-xl p-4 shadow-sm bg-white text-amber-950"
+              >
+                <p><strong>Pickup:</strong> {ride.pickup}</p>
+                <p><strong>Drop:</strong> {ride.drop}</p>
+                <p><strong>Vehicle:</strong> {ride.vehicle}</p>
+                <p><strong>Amount:</strong> ₹{ride.amount / 100}</p>
+                <p><strong>Payment ID:</strong> {ride.paymentId}</p>
+                <p className="text-sm text-gray-500">
+                  <strong>Date:</strong> {new Date(ride.createdAt).toLocaleString()}
+                </p>
+
+
+                <Link
+  href={`/book-ride?pickup=${ride.pickup}&drop=${ride.drop}&vehicle=${ride.vehicle}`}
+  className="text-blue-500 text-sm underline mt-1 inline-block"
+>
+  🚕 Book Again
+</Link>
+
+
+
+              </div>
+            )
+             )}
+
+
+<div className="flex justify-between mt-8">
+  {page > 1 && (
+    <Link href={`/dashboard?page=${page - 1}`} className="text-blue-600">
+      ⬅️ Previous
+    </Link>
+  )}
+  {page < totalPages && (
+    <Link href={`/dashboard?page=${page + 1}`} className="text-blue-600">
+      Next ➡️
+    </Link>
+  )}
+</div>
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}*/
+
+
+
+
+
+import clientPromise from '@/lib/mongodb';
+import { ObjectId } from 'mongodb';
+import Link from 'next/link';
+import { headers } from 'next/headers';
+
+interface Ride {
+  _id: ObjectId;
+  pickup: string;
+  drop: string;
+  vehicle: string;
+  amount: number;
+  paymentId: string;
+  createdAt: Date;
+}
+
+export default async function Dashboard() {
+  const requestHeaders = await headers();
+  const someHeader = requestHeaders.get('your-header-name');
+
+  const client = await clientPromise;
+  const db = client.db('yokrid');
+
+  const rides = await db
+    .collection<Ride>('rides')
+    .find()
+    .sort({ createdAt: -1 })
+    .toArray();
+
+  const totalRides = rides.length;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 flex flex-col items-center justify-start p-6">
+      <div className="bg-white rounded-3xl shadow-2xl p-10 max-w-5xl w-full text-center transform transition-all duration-500 hover:scale-[1.02]">
+        {/* Hero Section */}
+        <div className="flex justify-center mb-6">
+          <svg className="w-20 h-20 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M5.5 12a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM18.5 12a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+            <path d="M22 11h-1V7a3 3 0 00-3-3H6A3 3 0 003 7v4H2a1 1 0 000 2h1v5a3 3 0 003 3h1a3 3 0 003-3v-1h8v1a3 3 0 003 3h1a3 3 0 003-3v-5h1a1 1 0 100-2zm-16-4a1 1 0 011-1h10a1 1 0 011 1v4H6V7zm11 11a1 1 0 01-1 1H8a1 1 0 01-1-1v-1h10v1z" />
+          </svg>
+        </div>
+
+        <h1 className="text-4xl font-bold text-gray-800 mb-2">Welcome to your Dashboard</h1>
+        <p className="text-lg text-gray-600 mb-6">We're glad to have you back!</p>
+
+        {/* Book a Ride Button */}
+        <Link href="/book-ride">
+          <button className="mb-10 px-6 py-3 bg-green-500 hover:bg-green-600 transition rounded-xl text-white font-semibold text-lg shadow-md">
+            🧭 Book a Ride
+          </button>
+        </Link>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 text-left">
+          <div className="bg-blue-100 p-5 rounded-xl shadow-md">
+            <h2 className="text-lg font-semibold text-blue-800 mb-1">Total Rides</h2>
+            <p className="text-blue-700 text-2xl">{totalRides}</p>
+          </div>
+          <div className="bg-green-100 p-5 rounded-xl shadow-md">
+            <h2 className="text-lg font-semibold text-green-800 mb-1">Total Earnings</h2>
+            <p className="text-green-700 text-2xl">
+              ₹{rides.reduce((acc, r) => acc + r.amount, 0) / 100}
+            </p>
+          </div>
+          <div className="bg-purple-100 p-5 rounded-xl shadow-md">
+            <h2 className="text-lg font-semibold text-purple-800 mb-1">Vehicles Used</h2>
+            <p className="text-purple-700 text-2xl">
+              {Array.from(new Set(rides.map((r) => r.vehicle))).join(', ')}
+            </p>
+          </div>
+        </div>
+
+        {/* Export CSV Button */}
+        <a
+          href="/api/export-rides"
+          className="inline-block mb-4 text-green-600 underline text-sm"
+        >
+          ⬇️ Export Ride History (CSV)
+        </a>
 
         {/* Ride Data List */}
         <div className="text-left">
@@ -210,6 +399,12 @@ export default async function Dashboard() {
                 <p className="text-sm text-gray-500">
                   <strong>Date:</strong> {new Date(ride.createdAt).toLocaleString()}
                 </p>
+                <Link
+                  href={`/book-ride?pickup=${ride.pickup}&drop=${ride.drop}&vehicle=${ride.vehicle}`}
+                  className="text-blue-500 text-sm underline mt-1 inline-block"
+                >
+                  🚕 Book Again
+                </Link>
               </div>
             ))}
           </div>
