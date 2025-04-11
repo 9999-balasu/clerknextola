@@ -9,7 +9,7 @@ export default function AboutPage() {
         <h1 className="text-5xl font-bold text-green-400 drop-shadow-lg">About YokRide</h1>
         <p className="text-lg text-gray-300 leading-relaxed">
           YokRide is a modern ride-booking platform developed as a passion project by a free online student from
-          <span className="text-green-300 font-semibold"> SVGIE</span>, under the guidance and inspiration of <span className="text-green-400 font-semibold">Rghu Sir</span>.
+          <span className="text-green-300 font-semibold"> SVGIE</span>, under the guidance and inspiration of <span className="text-green-400 font-semibold">Raghu Sir</span>.
         </p>
 
         <div className="bg-gray-800 rounded-2xl p-6 md:p-10 shadow-xl text-left space-y-6">
