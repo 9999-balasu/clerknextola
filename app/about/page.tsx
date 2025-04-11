@@ -17,7 +17,7 @@ export default function AboutPage() {
           <p className="text-gray-300">
             As an SVGIE learner utilizing free online resources, I’ve created this project to demonstrate the power of
             dedication, community learning, and mentorship. YokRide is a tribute to self-learning and to the valuable
-            support of educators like Rghu Sir.
+            support of educators like Raghu Sir.
           </p>
 
           <h2 className="text-3xl font-bold text-green-400">🚀 Mission</h2>
